@@ -1,0 +1,10 @@
+[
+  {
+    "model": "ats.Class",
+    "pk": 1,
+    "fields": {
+      "standard": 1,
+      "section": "A" 
+    }
+  }
+]
