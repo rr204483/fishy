@@ -43,5 +43,6 @@ admin.site.register(Parent, ParentAdmin)
 admin.site.register(Class, ClassAdmin)
 admin.site.register(Staff)
 admin.site.register(Term)
+admin.site.register(Attn)
 
 
