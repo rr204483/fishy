@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from ats.forms import SchoolForm
 
 import datetime
@@ -15,7 +15,9 @@ def create_school(request):
     if request.method == 'POST':
         form = SchoolForm(request.POST)
         if form.is_valid():
-            form.save()
+			form.save()
+			message = "School added"
+			return HttpResponseRedirect('.')
     else:
         form = SchoolForm()
     context_data = {'form': form}

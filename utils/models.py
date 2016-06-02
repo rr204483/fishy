@@ -11,8 +11,8 @@ TITLE_CHOICES = (
     ('Miss.', 'Miss.'),
 )
 
-GENDER_CHOICES = ( ('M', 'Male'), 
-		   ('F', 'Female') 
+GENDER_CHOICES = ( ('M', 'Male'),
+		   ('F', 'Female')
 		  )
 
 # todo : populate STAFF_TYPE with the correct value
@@ -21,37 +21,49 @@ STAFF_TYPE_CHOICES = ( ('T', 'TEACHING'),
 			   ('NT', 'NON-TEACHING'),
 			   ('P', 'PRINCIPAL')
 		     )
-			 
+
 ATTN_CHOICES = (
     ('Present', 'Present'),
     ('Absent', 'Absent'),
     ('Sick', 'Sick'),
     ('Vacation', 'Vacation'),
     ('Medical', 'Medical')
-)			 
+)
 ASSIGNMENT_STATUS = (
     (1, 'Assigned'),
     (2, 'Completed'),
     (3, 'Late Completion'),
     (4, 'Partially Completed'),
     (5, 'Did Not Complete')
-)			 
+)
 
 BOARD_TYPES = (
 		('CBSE', 'CBSE'),
 		('ICSE', 'ICSE'),
-		('State Board Tamil', 'State Board'),
-		('State Board Matriculation', 'State Board Matriculation')
+		('State Board Tamil', 'State Board Tamil'),
+		('State Board Matriculation', 'State Board Matric')
 )
+
+COUNTRIES = (
+		('India', 'India'),
+		('UK', 'UK'),
+	)
+
+STATES = (
+		('Tamil Nadu', 'Tamil Nadu'),
+		('Karnataka', 'Karnataka'),
+		('Andra Pradesh', 'Andra Pradesh'),
+		('Kerala', 'Kerala')
+	)
 
 class School(models.Model):
 	name = models.CharField("Name of school", max_length=150)
-	board = models.CharField(max_length=30, choices=BOARD_TYPES)
+	board = models.CharField(max_length=30, choices=BOARD_TYPES, default='CBSE')
 	address = models.TextField(max_length=1000)
 	city = models.CharField(max_length=50, blank=True, null=True)
-	state = models.CharField(max_length=50, default="Tamil Nadu", editable=False)
-	country = models.CharField(max_length=50, default="India", editable=False)
-	phone1 = models.CharField(max_length=30)
+	state = models.CharField(max_length=50, choices = STATES, default='Tamil Nadu') 
+	country = models.CharField(max_length=50, choices = COUNTRIES, default='India') 
+	phone1 = models.CharField(max_length=30, blank=True, null=True)
 	phone2 = models.CharField(max_length=30, blank=True, null=True)
 	fax = models.CharField(max_length=30, blank=True, null=True)
 	email = models.EmailField(blank=True, null=True)
@@ -65,11 +77,11 @@ class Subject(models.Model):
 	#subject_id = models.CharField(max_length=50, primary_key=True)
 	subject_name = models.CharField(max_length=100, default="")
 	school_id = models.ForeignKey(School)
-	
+
 	def __str__(self):
 		return self.subject_name
 
-		
+
 class Student(models.Model):
 	title = models.CharField(max_length=5, default='Mr.', choices=TITLE_CHOICES)
 	first_name = models.CharField(max_length=50)
@@ -88,11 +100,11 @@ class Student(models.Model):
 
 	def __str__(self):
 		return self.first_name+self.last_name
-		
-		
+
+
 class Parent(models.Model):
-	PARENT_TYPE = ( 
-			('Mother', 'Mother'), ('Father', 'Father'), 
+	PARENT_TYPE = (
+			('Mother', 'Mother'), ('Father', 'Father'),
 			('Guardian','Guardian')
 		)
 
@@ -114,7 +126,7 @@ class Parent(models.Model):
 
 	def __str__(self):
 		return self.first_name+self.last_name
-		
+
 
 class Staff(models.Model):
 	title = models.CharField(max_length=5, default='Mr.', choices=TITLE_CHOICES)
@@ -137,13 +149,13 @@ class Staff(models.Model):
 	emergencycontact = models.CharField(max_length=20, blank=True, null=True)
 	major_subjects = models.CharField(max_length=50, blank=True, null=True)
 	school_id = models.ForeignKey(School)
-		
+
 
 class Class(models.Model):
 	class Meta:
 		unique_together = (('standard', 'section', 'school_id'))
-	
-	standard = models.CharField(max_length=30) 
+
+	standard = models.CharField(max_length=30)
 	section = models.CharField(max_length=30)
 	school_id = models.ForeignKey(School)
 	class_teacher_id = models.ForeignKey(Staff, null=True, related_name='class_teacher')
@@ -158,7 +170,7 @@ class Class(models.Model):
 class StudentClass(models.Model):
 	stu_class_rev_no = models.FloatField()
 	student_id = models.ForeignKey(Student)
-	class_id = models.ForeignKey(Class) 
+	class_id = models.ForeignKey(Class)
 	school_id = models.ForeignKey(School)
 	end_year = models.DateField()
 	result = models.CharField(max_length=50, null=True)
@@ -166,45 +178,45 @@ class StudentClass(models.Model):
 
 	def __str__(self):
 		return self.id+'#'+self.student_id+'#'+self.class_id+'#'+self.stu_class_rev_no
-		
+
 class StudentClassSubject(models.Model):
 	stu_class_sub_rev_no = models.FloatField()
 	stu_class_id = models.ForeignKey(StudentClass)
-	subject_id = models.ForeignKey(Subject) 
+	subject_id = models.ForeignKey(Subject)
 	school_id = models.ForeignKey(School)
 	eval_year = models.DateField()
 	result = models.CharField(max_length=50, null=True)
 	#additional_info = models.CharField(max_length=500, null=True)
 
 	def __str__(self):
-		return self.id+'#'+self.subject_id+'#'+self.stu_class_sub_rev_no		
-		
+		return self.id+'#'+self.subject_id+'#'+self.stu_class_sub_rev_no
+
 class StaffSubject(models.Model):
 	staff_sub_rev_no = models.FloatField()
 	staff_id = models.ForeignKey(Staff)
-	subject_id = models.ForeignKey(Subject) 
+	subject_id = models.ForeignKey(Subject)
 	school_id = models.ForeignKey(School)
 	active = models.CharField(max_length=20)
 
 	def __str__(self):
-		return self.id+'#'+self.staff_id+'#'+self.subject_id+'#'+self.stu_class_sub_rev_no	
-		
+		return self.id+'#'+self.staff_id+'#'+self.subject_id+'#'+self.stu_class_sub_rev_no
+
 class StaffClassSubject(models.Model):
 	staff_class_sub_rev_no = models.FloatField()
 	staff_sub_id = models.ForeignKey(StaffSubject)
-	class_id = models.ForeignKey(Class) 
+	class_id = models.ForeignKey(Class)
 	school_id = models.ForeignKey(School)
 	active = models.CharField(max_length=20)
 
 	def __str__(self):
-		return self.id+'#'+self.staff_sub_id+'#'+self.staff_class_sub_rev_no		
+		return self.id+'#'+self.staff_sub_id+'#'+self.staff_class_sub_rev_no
 
 class TransactionHistory(models.Model):
 	rev_no = models.FloatField()
 	time_stamp = models.DateField()
-	modified_by = models.ForeignKey(Staff) 
+	modified_by = models.ForeignKey(Staff)
 	reason = models.CharField(max_length=500)
-	transaction_code = models.CharField(max_length=10)  # SH - School table, ST - Student, CL - Class….
+	transaction_code = models.CharField(max_length=10)  # SH - School table, ST - Student, CL - Class.
 	school_id = models.ForeignKey(School)
 
 	def __str__(self):
@@ -218,7 +230,7 @@ class TimeTableSchedule(models.Model):
 	week_day = models.CharField(max_length=15)
 	date = models.DateField()
 	day_type = models.CharField(max_length=15)    # R - Regular, E- Exam, S-School Day, A-Actvities
-	day_desc = models.CharField(max_length=500)   # Exam, School Day, inter-school sports day…
+	day_desc = models.CharField(max_length=500)   # Exam, School Day, inter-school sports day
 	subject1 = models.ForeignKey(Subject, null=True, related_name='p_subject1')
 	planned_session_1 = models.CharField(max_length=200)    # Ex1: C=111#T=1,2#ST=1,2,3,4,5  (C=chapter, T=topic, ST=sub topic) Ex2: C=111,222#T=1,2,3,4#ST=1,2,3,4,5,6,7
 	planned_assignment_1 = models.CharField(max_length=200)
@@ -262,7 +274,7 @@ class TimeTableSchedule(models.Model):
 	class_id = models.ForeignKey(Class)
 	term = models.CharField(max_length=200)
 	school_id = models.ForeignKey(School)
-	
+
 
 class TimeTableActual(models.Model):
 	class Meta:
@@ -272,7 +284,7 @@ class TimeTableActual(models.Model):
 	week_day = models.CharField(max_length=15)
 	date = models.DateField()
 	day_type = models.CharField(max_length=15)    # R - Regular, E- Exam, S-School Day, A-Actvities
-	day_desc = models.CharField(max_length=500)   # Exam, School Day, inter-school sports day…
+	day_desc = models.CharField(max_length=500)   # Exam, School Day, inter-school sports day
 	subject1 = models.ForeignKey(Subject, null=True, related_name='a_subject1')
 	actual_session_1 = models.CharField(max_length=200)
 	actual_assignment_1 = models.CharField(max_length=200)
@@ -315,8 +327,8 @@ class TimeTableActual(models.Model):
 	actual_staff10 = models.ForeignKey(Staff, null=True, related_name='a_staff10')
 	class_id = models.ForeignKey(Class)
 	term = models.CharField(max_length=200)
-	school_id = models.ForeignKey(School)	
-	
+	school_id = models.ForeignKey(School)
+
 
 class AttnTracking(models.Model):
 	log_rev_no = models.FloatField()
@@ -348,7 +360,7 @@ class Syllabus(models.Model):
 	subject_id = models.ForeignKey(Subject)
 	class_id = models.ForeignKey(Class)
 	school_id = models.ForeignKey(School)
-	
+
 class SyllabusUnitsChap(models.Model):
 	unit_no = models.CharField(max_length=50)
 	unit_title = models.CharField(max_length=1000)
@@ -356,8 +368,8 @@ class SyllabusUnitsChap(models.Model):
 	chap_title = models.CharField(max_length=1000)
 	topics = models.CharField(max_length=1000)
 	syllabus_id = models.ForeignKey(Syllabus)
-	syllabus_rev_no = models.FloatField()   
-	school_id = models.ForeignKey(School)	
+	syllabus_rev_no = models.FloatField()
+	school_id = models.ForeignKey(School)
 
 class Books(models.Model):
 	book_rev_no = models.FloatField()
@@ -368,43 +380,43 @@ class Books(models.Model):
 	book_published = models.DateField() # captures the year of book published
 	subject_id = models.ForeignKey(Subject)
 	class_id = models.ForeignKey(Class)
-	school_id = models.ForeignKey(School)	
-	
+	school_id = models.ForeignKey(School)
+
 class SyllabusBooks(models.Model):
 	book_id = models.ForeignKey(Books)
 	book_rev_no = models.FloatField()
 	book_used = models.NullBooleanField()   # You can only have one Book that is active per school (CBSC - where you have more than one recommended books)
 	syllabus_id = models.ForeignKey(Syllabus)
-	syllabus_rev_no = models.FloatField()   
-	school_id = models.ForeignKey(School)	
-	
-	
+	syllabus_rev_no = models.FloatField()
+	school_id = models.ForeignKey(School)
+
+
 class BookChapters(models.Model):
 	chap_title = models.CharField(max_length=500)    # This can be something like Unit 1. Chapter 1, Unit 1. Chapter 2
 	page_nos = models.CharField(max_length=100)   #10-20 (means - start page - 10 end page - 20) while populating the chapters listing in UI - combine this field as well - like Unit 1. Chapter 1 (10-20)
 	chap_assignment = models.CharField(max_length=1000)   # chap level home work
-	assignment_page_nos = models.CharField(max_length=100) 
+	assignment_page_nos = models.CharField(max_length=100)
 	book_id = models.ForeignKey(Books)
 	book_rev_no = models.FloatField()
-	school_id = models.ForeignKey(School)	
-	
-	
+	school_id = models.ForeignKey(School)
+
+
 class BookTopics(models.Model):
-	Topic = models.CharField(max_length=1000)    
+	Topic = models.CharField(max_length=1000)
 	page_nos = models.CharField(max_length=100)   # similar to chapters
 	topic_assignment = models.CharField(max_length=1000)   # chap level home work
-	assignment_page_nos = models.CharField(max_length=100) 
+	assignment_page_nos = models.CharField(max_length=100)
 	book_chap_id = models.ForeignKey(BookChapters)
-	school_id = models.ForeignKey(School)	
-		
+	school_id = models.ForeignKey(School)
+
 class BookSubTopics(models.Model):
-	subtopic = models.CharField(max_length=1000)    
-	page_nos = models.CharField(max_length=100)  
+	subtopic = models.CharField(max_length=1000)
+	page_nos = models.CharField(max_length=100)
 	subtopic_assignment = models.CharField(max_length=1000)   # chap level home work
-	assignment_page_nos = models.CharField(max_length=100) 
+	assignment_page_nos = models.CharField(max_length=100)
 	book_topics_id = models.ForeignKey(BookTopics)
-	school_id = models.ForeignKey(School)	
-		
+	school_id = models.ForeignKey(School)
+
 class Term(models.Model):
 	term_id = models.IntegerField()
 	start_month = models.CharField(max_length=20)
