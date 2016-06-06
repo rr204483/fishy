@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="school">
+    <h1><a href="/ats/schooladd">List of Schools</a></h1>
+</div>
+
+{% for school in schools %}
+    <div class="school">
+		<table>
+			<tr>
+			<td><a href="{% url 'school_detail' pk=school.pk %}"> <b>{{ school.name}}</b></a></td>
+			<td>{{ school.address}}</a></td>
+			</td>
+		</table>
+		
+    </div>
+{% endfor %}
+<br>
+
+<a href="{{request.META.HTTP_REFERER}}">Go back</a>
+
+
+{% endblock %}
