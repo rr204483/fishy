@@ -7,4 +7,9 @@ class SchoolSerializer(serializers.ModelSerializer):
 		fields = ('name', 'board', 'address', 'city', 'state', 'country',
                   'phone1', 'phone2', 'fax', 'email', 'website')
 
+class TermSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Term
+		fields = ('term_id', 'start_month', 'end_month', 'school_id')
+
 
