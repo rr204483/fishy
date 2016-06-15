@@ -16,24 +16,6 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from utils.models import School
-from rest_framework import routers, serializers, viewsets
-
-# Serializers define the API representation.
-class SchoolSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-		model = School
-		fields = ('name', 'board', 'address', 'city', 'state', 'country',
-                  'phone1', 'phone2', 'fax', 'email', 'website')
-
-# ViewSets define the view behavior.
-class SchoolViewSet(viewsets.ModelViewSet):
-    queryset = School.objects.all()
-    serializer_class = SchoolSerializer
-
-# Routers provide an easy way of automatically determining the URL conf.
-router = routers.DefaultRouter()
-router.register(r'school', SchoolViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -41,6 +23,5 @@ router.register(r'school', SchoolViewSet)
 urlpatterns = [
     url(r'ats/', include('ats.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^rest/school', include(router.urls)),
 	url(r'^api/', include('ats.api.urls', namespace='api')),
 ]
