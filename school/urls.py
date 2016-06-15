@@ -42,4 +42,5 @@ urlpatterns = [
     url(r'ats/', include('ats.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^rest/school', include(router.urls)),
+	url(r'^api/', include('ats.api.urls', namespace='api')),
 ]
