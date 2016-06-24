@@ -5,12 +5,12 @@
 </div>
 
 {% for school in schools %}
-    <div class="school">
-		<table>
+    <div class="col-md-6">
+		<table class="table table-striped">
 			<tr>
 			<td><a href="{% url 'school_detail' pk=school.pk %}"> <b>{{ school.name}}</b></a></td>
-			<td>{{ school.address}}</a></td>
-			</td>
+			<td>{{ school.address}}</td>
+			</tr>
 		</table>
 		
     </div>

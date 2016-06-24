@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>School</h2>
+<h2>School </h2>
 <div id="create_school">
 	<form action="." method="post">{% csrf_token %}
 		<table>
 			{{form}}
 			<tr>
-				<td></td>
+			<td><br> </td><td></td>
+			</tr>
+			<tr>
 			<td>
-				<br>
-				<br>
-				<input type="submit" value="Save">
+				<input class="btn btn-sm btn-default" type="submit" value="Save">
 			</td>
 			<td>
 			<a href="{% url 'list_schools' %}"><b>List Schools</b></a>
 			</td>
+			</tr>
 		</table>
         </form>
 </div>
