@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^listschools/$', views.list_schools, name="list_schools"),
 	url(r'^school/(?P<pk>\d+)/$', views.school_detail, name='school_detail'),
 	url(r'^school/(?P<pk>\d+)/edit/$', views.school_edit, name='school_edit'),
+	url(r'^delete/(?P<pk>\d+)/$', views.SchoolDelete.as_view(), name="delete_school")
 ]

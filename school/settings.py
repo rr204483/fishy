@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 	'ats',
 	'utils',
 	'rest_framework',
+	'haystack',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -55,10 +56,11 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'school.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,6 +86,15 @@ DATABASES = {
     }
 }
 
+# Search Engine
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators

@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="school">
-    <h1><a href="/ats/schooladd">List of Schools</a></h1>
+    <h1><a href="/ats/listschools">Schools</a></h1>
+	<br>
 </div>
 
 {% for school in schools %}
@@ -10,6 +11,8 @@
 			<tr>
 			<td><a href="{% url 'school_detail' pk=school.pk %}"> <b>{{ school.name}}</b></a></td>
 			<td>{{ school.address}}</td>
+			<td> <a class="btn btn-default" href="{% url 'school_edit' pk=school.pk %}">Edit</a></td>
+			<td> <a href="{% url 'delete_school' pk=school.pk %}" class="btn btn-link">X</a></td>
 			</tr>
 		</table>
 		
@@ -17,7 +20,6 @@
 {% endfor %}
 <br>
 
-<a href="{{request.META.HTTP_REFERER}}">Go back</a>
 
 
 {% endblock %}
