@@ -6,7 +6,7 @@ from utils.models import School
 class SchoolIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.CharField(model_attr='name')
-    address = indexes.DateTimeField(model_attr='address')
+    address = indexes.CharField(model_attr='address')
 
     def get_model(self):
         return School
