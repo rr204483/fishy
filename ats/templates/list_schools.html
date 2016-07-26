@@ -1,23 +1,72 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <div class="school">
     <h1><a href="/ats/listschools">Schools</a></h1>
 	<br>
 </div>
+<!-- search html code starts here -->
+<head>
+<style>
+input[type=text] {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
 
-{% for school in schools %}
-    <div class="col-md-6">
-		<table class="table table-striped">
-			<tr>
-			<td><a href="{% url 'school_detail' pk=school.pk %}"> <b>{{ school.name}}</b></a></td>
-			<td>{{ school.address}}</td>
-			<td> <a class="btn btn-default" href="{% url 'school_edit' pk=school.pk %}">Edit</a></td>
-			<td> <a href="{% url 'delete_school' pk=school.pk %}" class="btn btn-link">X</a></td>
-			</tr>
-		</table>
+input[type=text]:focus {
+    width: 100%;
+}
+</style>
+</head>
+<form method="get" action="{% url 'haystack_search' %}">
+
+<input type="text" name="q" placeholder="Search.." >
+
+ </form>
+
+
+<!-- search html code ends here -->
+
+{% if query %}
+	<h3>Results</h3>
+
+	{% for result in page.object_list %}
+		<p>
+			<a href="{% url 'school_detail' pk=result.object.pk %}">{{ result.object.name }}</a>
+		</p>
+	{% empty %}
+		<p>No results found.</p>
+	{% endfor %}
+{% else %}			
+
+	{% for school in schools %}
+		<div class="col-md-6">
 		
-    </div>
-{% endfor %}
+		
+		
+			<table class="table table-striped">
+				<tr>
+				<td><a href="{% url 'school_detail' pk=school.pk %}"> <b>{{ school.name}}</b></a></td>
+				<td>{{ school.address}}</td>
+				<td> <a class="btn btn-default" href="{% url 'school_edit' pk=school.pk %}">Edit</a></td>
+				<td> <a href="{% url 'delete_school' pk=school.pk %}" class="btn btn-link">X</a></td>
+				</tr>
+			</table>
+			
+		</div>
+	{% endfor %}
+
+{% endif %}
 <br>
 
 

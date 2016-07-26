@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'student/', include('student.urls')),
     url(r'^admin/', admin.site.urls),
 	url(r'^api/', include('ats.api.urls', namespace='api')),
-	url(r'^search/', include('haystack.urls')),	
+	url(r'^search/', include('haystack.urls'), name='haystack_search'),	
 ]
