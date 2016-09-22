@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 	'utils',
 	'rest_framework',
 	'haystack',
+    'elasticsearch',
 ]
 
 MIDDLEWARE_CLASSES = [
