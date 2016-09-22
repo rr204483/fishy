@@ -5,6 +5,7 @@ from utils.models import School
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.edit import DeleteView # this is the generic view
 from django.core.urlresolvers import reverse_lazy
+from django.db.models import Q
 
 import datetime
 
@@ -38,7 +39,12 @@ def create_school(request):
 	
 		
 def list_schools(request):
-    schools = School.objects.all()  
+	
+    if request.GET.get("q","") != "":
+        search_query=request.GET.get("q","")
+        schools = School.objects.filter(Q(name__icontains=search_query)|Q(address__icontains=search_query))
+    else:
+        schools = School.objects.all()  
     return render(request, 'list_schools.html', {'schools': schools})
 	
 def school_detail(request, pk):
@@ -61,4 +67,6 @@ def school_edit(request, pk):
     # return render_to_response('create_school.html', context_data,
     #       context_instance=RequestContext(request))
     return render(request, 'create_school.html', context_data)
+	
+	
 
