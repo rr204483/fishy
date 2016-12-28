@@ -23,6 +23,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'ats/', include('ats.urls')),
     url(r'student/', include('student.urls')),
+    url(r'staff/', include('staff.urls')),
     url(r'^admin/', admin.site.urls),
 	url(r'^api/', include('ats.api.urls', namespace='api')),
 	url(r'^search/', include('haystack.urls'), name='haystack_search'),	

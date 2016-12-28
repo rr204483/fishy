@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <h1>Staff - {{ staff.first_name}}}}</h1>
+</div>
+
+    <div class="staff">
+		<table>
+			<tr>
+			<td><b>First Name: </b></a></td> <td>{{ staff.first_name}}</a></td>
+			</tr>
+			<tr>
+			<td><b>Last Name: </b></a></td> <td>{{ staff.last_name}}</a></td>
+			</tr>
+			<br>
+			<tr>
+			<td>
+			<a class="btn btn-default" href="{% url 'staff_edit' pk=staff.pk %}">Edit</a>
+			</td>			
+			<td>
+			<a href="{{request.META.HTTP_REFERER}}">Go back</a>
+			</td>
+			</tr>
+			
+		</table>
+		
+    </div>
+
+<br>
+
+
+{% endblock %}
+

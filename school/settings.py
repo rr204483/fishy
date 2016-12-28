@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 	'ats',
 	'utils',
+	'staff',
 	'rest_framework',
 	'haystack',
     'elasticsearch',

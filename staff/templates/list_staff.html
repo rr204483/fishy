@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="staff">
+    <h1><a href="/staff/liststaff">Staff</a></h1>
+	<br>
+</div>
+<!-- search html code starts here -->
+<head>
+<style>
+input[type=text] {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 100%;
+}
+</style>
+</head>
+<form method="get" action="{% url 'list_staff' %}">
+
+<input type="text" name="q" placeholder="Search.." >
+
+ </form>
+
+ 
+<!-- search html code ends here -->
+
+{% if query %}
+	<h3>Results</h3>
+
+	{% for result in page.object_list %}
+		<p>
+			<a href="{% url 'staff_detail' pk=result.object.pk %}">{{ result.object.name }}</a>
+		</p>
+	{% empty %}
+		<p>No results found.</p>
+	{% endfor %}
+{% else %}			
+
+	{% for staff in staffs %}
+		<div class="col-md-6">
+		
+		
+		
+			<table class="table table-striped">
+				<tr>
+				<td><a href="{% url 'staff_detail' pk=staff.pk %}"> <b>{{ staff.first_name}}</b></a></td>
+				<td>{{ staff.address}}</td>
+				<td> <a class="btn btn-default" href="{% url 'staff_edit' pk=staff.pk %}">Edit</a></td>
+				<td> <a href="{% url 'delete_staff' pk=staff.pk %}" class="btn btn-link">X</a></td>
+				</tr>
+			</table>
+			
+		</div>
+	{% endfor %}
+
+{% endif %}
+<br>
+
+
+
+{% endblock %}

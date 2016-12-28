@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+Thanks you.  
+<br>
+Staff "{{ form.first_name.value }}" successfully Saved
+<br>
+<b>Staff Name: </b>{{ form.first_name.value }}
+<br>
+<a href="{{request.META.HTTP_REFERER}}">Go back</a>
+
+
+{% endblock %}

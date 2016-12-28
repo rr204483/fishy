@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Staff </h2>
+<div id="create_staff">
+	<form action="." method="post">{% csrf_token %}
+		<table>
+			{{form}}
+			<tr>
+			<td><br> </td><td></td>
+			</tr>
+			<tr>
+			<td>
+				<input class="btn btn-sm btn-default" type="submit" value="Save">
+			</td>
+			<td>
+			<a href="{% url 'staffadd' %}"><b>List Staff</b></a>
+			</td>
+			</tr>
+		</table>
+        </form>
+</div>
+
+
+{% endblock %}
+

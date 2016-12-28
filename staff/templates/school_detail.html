@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <h1>School - {{ school.name}}</h1>
+</div>
+
+    <div class="school">
+		<table>
+			<tr>
+			<td><b>Address: </b></a></td> <td>{{ school.address}}</a></td>
+			</tr>
+			<tr>
+			<td><b>WEbsite: </b></a></td> <td>{{ school.website}}</a></td>
+			</tr>
+			<br>
+			<tr>
+			<td>
+			<a class="btn btn-default" href="{% url 'school_edit' pk=school.pk %}">Edit</a>
+			</td>			
+			<td>
+			<a href="{{request.META.HTTP_REFERER}}">Go back</a>
+			</td>
+			</tr>
+			
+		</table>
+		
+    </div>
+
+<br>
+
+
+{% endblock %}
+
