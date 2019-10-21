@@ -1,7 +1,7 @@
 Django==1.8.8
 django-filter==0.13.0
 django-haystack==2.4.1
-djangorestframework==3.3.3
+djangorestframework==3.9.1
 elasticsearch==2.3.0
 Markdown==2.6.6
 Pillow==3.2.0
