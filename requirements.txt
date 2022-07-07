@@ -6,7 +6,7 @@ elasticsearch==2.3.0
 Markdown==2.6.6
 Pillow==3.2.0
 pyelasticsearch==0.5
-requests==1.2.3
+requests==2.20.0
 simplejson==3.8.2
 six==1.10.0
 urllib3==1.16
