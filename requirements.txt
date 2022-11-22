@@ -4,7 +4,7 @@ django-haystack==2.4.1
 djangorestframework==3.3.3
 elasticsearch==2.3.0
 Markdown==2.6.6
-Pillow==3.2.0
+Pillow==9.3.0
 pyelasticsearch==0.5
 requests==1.2.3
 simplejson==3.8.2
